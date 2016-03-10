@@ -50,6 +50,6 @@ class UserVideo extends Model
      */
     public function video()
     {
-        return $this->belongsTo(Klsandbox\OrientationRoute\Models\Video::class, 'video_id', 'id');
+        return $this->belongsTo(\Klsandbox\OrientationRoute\Models\Video::class, 'video_id', 'id');
     }
 }

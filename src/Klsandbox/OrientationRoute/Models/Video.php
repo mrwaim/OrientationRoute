@@ -45,7 +45,7 @@ class Video extends Model
      */
     public function watchedVideo()
     {
-        return $this->hasMany(Klsandbox\OrientationRoute\Models\UserVideo::class, 'video_id', 'id');
+        return $this->hasMany(\Klsandbox\OrientationRoute\Models\UserVideo::class, 'video_id', 'id');
     }
 
     public function watchedByUser($user)
