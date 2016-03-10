@@ -31,4 +31,19 @@ class OrientationRouteServiceProvider extends ServiceProvider {
 		return [];
 	}
 
+	public function boot() {
+		if (!$this->app->routesAreCached()) {
+			require __DIR__ . '/../../../routes/routes.php';
+		}
+
+		$this->loadViewsFrom(__DIR__ . '/../../../views/', 'orientation-route');
+
+		$this->publishes([
+			__DIR__ . '/../../../views/' => base_path('resources/views/vendor/orientation-route')
+		], 'views');
+
+		$this->publishes([
+			__DIR__ . '/../../../database/migrations/' => database_path('/migrations')
+		], 'migrations');
+	}
 }
