@@ -11,7 +11,7 @@ Route::group(['prefix' => 'videos'], function () {
         Route::get('{video}/unwatch', '\Klsandbox\OrientationRoute\Http\Controllers\VideoController@unwatchVideo');
     });
 
-    Route::group(['middleware' => ['auth.admin']], function () {
+    Route::group(['middleware' => ['role:admin']], function () {
         Route::get('all-videos', '\Klsandbox\OrientationRoute\Http\Controllers\VideoController@allVideos');
         Route::get('create-video', '\Klsandbox\OrientationRoute\Http\Controllers\VideoController@create');
         Route::post('store', '\Klsandbox\OrientationRoute\Http\Controllers\VideoController@store');
