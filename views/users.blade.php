@@ -1,22 +1,8 @@
 @extends('app')
 
 @section('page-header')
-    <h2>Orientation Video</h2>
-
-    <div class="right-wrapper pull-right">
-        <ol class="breadcrumbs">
-            <li>
-                <a href="{{ url('home') }}">
-                    <i class="fa fa-home"></i>
-                </a>
-            </li>
-            <li><span>Orientation Video</span></li>
-            <li class="active"><span>Users: {{ $users->count() }}</span></li>
-        </ol>
-
-        <div class="sidebar-right-toggle"></div>
-    </div>
-@stop
+    @include('elements.page-header', ['section_title' => 'Orientation Video', 'page_title' => 'Users List'])
+@endsection
 
 @section('content')
     <section class="panel">
@@ -54,4 +40,4 @@
             </section>
         </div>
     </section>
-@stop
+@endsection

@@ -1,22 +1,8 @@
 @extends('app')
 
 @section('page-header')
-    <h2>Orientation Video</h2>
-
-    <div class="right-wrapper pull-right">
-        <ol class="breadcrumbs">
-            <li>
-                <a href="{{ url('home') }}">
-                    <i class="fa fa-home"></i>
-                </a>
-            </li>
-            <li><span>Orientation Video</span></li>
-            <li class="active"><span>Watch a Video</span></li>
-        </ol>
-
-        <div class="sidebar-right-toggle"></div>
-    </div>
-@stop
+    @include('elements.page-header', ['section_title' => 'Orientation Video', 'page_title' => 'Watch a Video'])
+@endsection
 
 @section('content')
     @include('elements.event')
@@ -83,4 +69,4 @@
     </section>
 
     <br>
-@stop
+@endsection

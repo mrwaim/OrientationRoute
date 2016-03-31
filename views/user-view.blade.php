@@ -1,23 +1,7 @@
 @extends('app')
 
 @section('page-header')
-    <h2>Video Details for {{$user->name}}</h2>
-
-    <div class="right-wrapper pull-right">
-        <ol class="breadcrumbs">
-            <li>
-                <a href="index.html">
-                    <i class="fa fa-home"></i>
-                </a>
-            </li>
-            <li><span>Video Management</span></li>
-            <li><span>
-                    Video Details for {{$user->name}}
-        </span></li>
-        </ol>
-
-        <div class="sidebar-right-toggle"></div>
-    </div>
+    @include('elements.page-header', ['section_title' => 'Orientation Video', 'page_title' => 'Video Details for ' . $user->name])
 @endsection
 
 @section('content')
@@ -42,4 +26,4 @@
     @else
         This user has not seen any video yet.
     @endif
-@stop
+@endsection
