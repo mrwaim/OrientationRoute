@@ -4,7 +4,7 @@ Route::group(['prefix' => 'videos'], function () {
     Route::group(['middleware' => ['auth']], function () {
         Route::get('all', '\Klsandbox\OrientationRoute\Http\Controllers\VideoController@index');
         Route::get('users', '\Klsandbox\OrientationRoute\Http\Controllers\VideoController@users');
-        Route::get('users/{username}/view', '\Klsandbox\OrientationRoute\Http\Controllers\VideoController@viewUser');
+        Route::get('users/{user}/view', '\Klsandbox\OrientationRoute\Http\Controllers\VideoController@viewUser');
 
         Route::get('{video}/view', '\Klsandbox\OrientationRoute\Http\Controllers\VideoController@video');
         Route::get('{video}/watch', '\Klsandbox\OrientationRoute\Http\Controllers\VideoController@watchVideo');

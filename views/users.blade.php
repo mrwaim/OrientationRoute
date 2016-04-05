@@ -30,7 +30,7 @@
                     @foreach($users as $key => $user)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td><a href="{{ url('videos/users/' . $user->ic_number . '/view') }}">{{ $user->name }}</a>
+                            <td><a href="{{ url('videos/users/' . $user->getRouteKey() . '/view') }}">{{ $user->name }}</a>
                             </td>
                             <td>{{ count($user->watchedVideo) }}</td>
                         </tr>

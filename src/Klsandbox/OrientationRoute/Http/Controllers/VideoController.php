@@ -149,17 +149,11 @@ class VideoController extends Controller
      * @param $username
      * @return mixed
      */
-    public function viewUser($username)
+    public function viewUser(User $user)
     {
-        $user = $this->user->forSite()->where('ic_number', $username);
-
-        if ($user->count() > 0) {
-            return view('orientation-route::user-view')
-                ->withInfo(['title' => $user->first()])
-                ->withUser($user->first());
-        }
-
-        abort(404);
+        return view('orientation-route::user-view')
+            ->withInfo(['title' => $user->first()])
+            ->withUser($user->first());
     }
 
     /**
