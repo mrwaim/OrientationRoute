@@ -48,7 +48,7 @@
                     <label for="order_number" class="col-md-3 control-label">Order Number</label>
 
                     <div class="col-md-5">
-                        <input type="text" name="order_number" id="order_number" class="form-control"
+                        <input type="text" name="order_number" class="form-control"
                                value="{{ old('order_number') }}" placeholder="Order Number">
                     </div>
                     <!-- div.col-md-5 -->

@@ -47,7 +47,7 @@
                                     </td>
                                     <td>{{ $video->description }}</td>
                                     <td width="10%">
-                                        <input type="number" name="order_number[]" id="order_number" class="form-control"
+                                        <input type="number" name="order_number[]" class="form-control"
                                                value="{{ $video->order_number }}">
                                     </td>
                                     <td width="20%">
