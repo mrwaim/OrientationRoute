@@ -21,7 +21,7 @@
                     <!-- Include error message div -->
                     @include('elements.event')
 
-                    <form action="{{ url('videos/' . $video->order_number . '-' . $video->slug . '/update') }}"
+                    <form action="{{ url('videos/' . $video->id . '/update') }}"
                           class="form-horizontal" method="post">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

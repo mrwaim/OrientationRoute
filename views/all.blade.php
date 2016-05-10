@@ -29,7 +29,7 @@
                         <br>
 
                         <p>
-                            <a href="{{ url('videos/' . $video->order_number . '-' . $video->slug . '/view') }}">{{ $video->title }}</a>
+                            <a href="{{ url('videos/' . $video->id . '/view') }}">{{ $video->title }}</a>
                         </p>
                     </div>
                 @endforeach

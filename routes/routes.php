@@ -23,11 +23,8 @@ Route::group(['prefix' => 'videos'], function () {
     });
 });
 
-Route::bind('video', function ($slug) {
-    $slug = explode('-', $slug);
-    $order = $slug[0];
-
-    $video = \Klsandbox\OrientationRoute\Models\Video::forSite()->whereOrderNumber($order)->first();
+Route::bind('video', function ($id) {
+    $video = \Klsandbox\OrientationRoute\Models\Video::find($id);
     \Klsandbox\SiteModel\Site::protect($video, 'Video');
 
     return $video;

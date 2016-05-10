@@ -3,7 +3,7 @@ $videoSubmenu = [];
 foreach ($videos as $video) {
     $videoSubmenu[] = [
             'videoFilter' => $video->id,
-            'url' => $video->order_number . '-' . $video->slug . '/view',
+            'url' => $video->id . '/view',
             'menu' => ($video->watchedByUser($auth->user) ? '✔' : '') . ' ' . $video->title,
     ];
 }

@@ -193,17 +193,6 @@ class VideoController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Edit a video.
      *
      * @param $slug
@@ -288,14 +277,14 @@ class VideoController extends Controller
         {
             $video = $this->video->find($id);
 
-            if ($video->count() > 0)
+            if ($video)
             {
                 $video->order_number = $order_numbers[$key];
                 $video->save();
             }
             else
             {
-                abort(404);
+                abort(404, 'Video not found ' . $id);
             }
         }
 

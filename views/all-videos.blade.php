@@ -43,7 +43,7 @@
                                     <input type="hidden" name="id[]" value="{{ $video->id }}">
                                     <td>{{$video->order_number}}</td>
                                     <td>
-                                        <a href="{{ url('videos/' . $video->order_number . '-' . $video->slug . '/view') }}">{{ $video->title }}</a>
+                                        <a href="{{ url('videos/' . $video->id . '/view') }}">{{ $video->title }}</a>
                                     </td>
                                     <td>{{ $video->description }}</td>
                                     <td width="10%">
@@ -51,9 +51,9 @@
                                                value="{{ $video->order_number }}">
                                     </td>
                                     <td width="20%">
-                                        <a href="{{ url('videos/' . $video->order_number . '-' . $video->slug . '/edit') }}"
+                                        <a href="{{ url('videos/' . $video->id . '/edit') }}"
                                            class="btn btn-default">Edit</a>
-                                        <a href="{{ url('videos/' . $video->order_number . '-' . $video->slug . '/delete') }}"
+                                        <a href="{{ url('videos/' . $video->id . '/delete') }}"
                                            class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
