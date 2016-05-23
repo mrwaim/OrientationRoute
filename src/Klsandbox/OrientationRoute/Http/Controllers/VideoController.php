@@ -2,7 +2,6 @@
 
 namespace Klsandbox\OrientationRoute\Http\Controllers;
 
-use App\Http\Requests;
 use App\Models\User;
 use Klsandbox\OrientationRoute\Models\UserVideo;
 use Klsandbox\OrientationRoute\Models\Video;
@@ -13,7 +12,6 @@ use App\Http\Controllers\Controller;
 
 class VideoController extends Controller
 {
-
     /**
      * @var User
      */
@@ -76,6 +74,7 @@ class VideoController extends Controller
      * View a video.
      *
      * @param $slug
+     *
      * @return mixed
      */
     public function video(Video $video)
@@ -94,6 +93,7 @@ class VideoController extends Controller
      * Watch a video fully.
      *
      * @param $slug
+     *
      * @return mixed
      */
     public function watchVideo(Video $video)
@@ -115,6 +115,7 @@ class VideoController extends Controller
      * Unwatch a video.
      *
      * @param $slug
+     *
      * @return mixed
      */
     public function unwatchVideo(Video $video)
@@ -147,6 +148,7 @@ class VideoController extends Controller
      * View a user.
      *
      * @param $username
+     *
      * @return mixed
      */
     public function viewUser(User $user)
@@ -178,7 +180,7 @@ class VideoController extends Controller
             'title' => 'required',
             'description' => 'required',
             'order_number' => 'required|integer|unique:videos',
-            'embed_code' => 'required'
+            'embed_code' => 'required',
         ]);
 
         $this->video->create([
@@ -186,7 +188,7 @@ class VideoController extends Controller
             'description' => $this->request->input('description'),
             'order_number' => $this->request->input('order_number'),
             'embed_code' => $this->request->input('embed_code'),
-            'slug' => str_slug($this->request->input('title'), '-')
+            'slug' => str_slug($this->request->input('title'), '-'),
         ]);
 
         return redirect('videos/all')->withSuccess('Video added');
@@ -196,6 +198,7 @@ class VideoController extends Controller
      * Edit a video.
      *
      * @param $slug
+     *
      * @return mixed
      */
     public function edit(Video $video)
@@ -212,6 +215,7 @@ class VideoController extends Controller
      * Update a video.
      *
      * @param $slug
+     *
      * @return mixed
      */
     public function update(Video $video)
@@ -221,7 +225,7 @@ class VideoController extends Controller
             'title' => 'required',
             'description' => 'required',
             'order_number' => 'required|integer|unique:videos,order_number,' . $video->id . ',id',
-            'embed_code' => 'required'
+            'embed_code' => 'required',
         ]);
 
         $video->title = $this->request->input('title');
@@ -247,23 +251,21 @@ class VideoController extends Controller
         $ids = $this->request->input('id');
         $order_numbers = $this->request->input('order_number');
 
-        if (count($order_numbers) !== count(array_unique($order_numbers)))
-        {
-            $messages = new MessageBag;
-            $messages->add('order_number', "Order numbers are not unqiue");
+        if (count($order_numbers) !== count(array_unique($order_numbers))) {
+            $messages = new MessageBag();
+            $messages->add('order_number', 'Order numbers are not unqiue');
+
             return redirect('videos/all-videos')->withErrors($messages);
         }
 
-        foreach($ids as $key => $id)
-        {
+        foreach ($ids as $key => $id) {
             $rules['id.' . $key] = 'required|integer|min:1';
             $messages['id.' . $key . '.required'] = 'Invalid request';
             $messages['id.' . $key . '.integer'] = 'Invalid request';
             $messages['id.' . $key . '.min'] = 'Invalid request';
         }
 
-        foreach($order_numbers as $key => $order_number)
-        {
+        foreach ($order_numbers as $key => $order_number) {
             $rules['order_number.' . $key] = 'required|integer|min:1';
             $messages['order_number.' . $key . '.required'] = 'Order number is required';
             $messages['order_number.' . $key . '.integer'] = 'Invalid order number';
@@ -273,17 +275,13 @@ class VideoController extends Controller
         $this->validate($this->request, $rules, $messages);
 
         // Update order number.
-        foreach($ids as $key => $id)
-        {
+        foreach ($ids as $key => $id) {
             $video = $this->video->find($id);
 
-            if ($video)
-            {
+            if ($video) {
                 $video->order_number = $order_numbers[$key];
                 $video->save();
-            }
-            else
-            {
+            } else {
                 abort(404, 'Video not found ' . $id);
             }
         }
@@ -295,6 +293,7 @@ class VideoController extends Controller
      * Delete a video.
      *
      * @param $slug
+     *
      * @return mixed
      */
     public function delete(Video $video)
@@ -303,5 +302,4 @@ class VideoController extends Controller
 
         return redirect('videos/all')->withSuccess('Video removed');
     }
-
 }

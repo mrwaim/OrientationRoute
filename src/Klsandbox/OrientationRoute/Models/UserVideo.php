@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $updated_at
  * @property-read \App\Models\User $user
  * @property-read \App\Models\Video $video
+ *
  * @method static \Illuminate\Database\Query\Builder|\Klsandbox\OrientationRoute\Models\UserVideo whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Klsandbox\OrientationRoute\Models\UserVideo whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Klsandbox\OrientationRoute\Models\UserVideo whereUpdatedAt($value)
