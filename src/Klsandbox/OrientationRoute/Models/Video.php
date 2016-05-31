@@ -17,7 +17,6 @@ use Klsandbox\SiteModel\SiteExtensions;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\UserVideo[] $watchedVideo
- *
  * @method static \Illuminate\Database\Query\Builder|\Klsandbox\OrientationRoute\Models\Video whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Klsandbox\OrientationRoute\Models\Video whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Klsandbox\OrientationRoute\Models\Video whereUpdatedAt($value)
@@ -27,9 +26,7 @@ use Klsandbox\SiteModel\SiteExtensions;
  * @method static \Illuminate\Database\Query\Builder|\Klsandbox\OrientationRoute\Models\Video whereOrderNumber($value)
  * @method static \Illuminate\Database\Query\Builder|\Klsandbox\OrientationRoute\Models\Video whereEmbedCode($value)
  * @mixin \Eloquent
- *
  * @property integer $site_id
- *
  * @method static \Illuminate\Database\Query\Builder|\Klsandbox\OrientationRoute\Models\Video whereSiteId($value)
  */
 class Video extends Model
