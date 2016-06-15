@@ -2,6 +2,7 @@
 
 namespace Klsandbox\OrientationRoute;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class OrientationRouteServiceProvider extends ServiceProvider
@@ -33,7 +34,7 @@ class OrientationRouteServiceProvider extends ServiceProvider
         return [];
     }
 
-    public function boot()
+    public function boot(Router $router)
     {
         if (!$this->app->routesAreCached()) {
             require __DIR__ . '/../../../routes/routes.php';
@@ -48,5 +49,12 @@ class OrientationRouteServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../../database/migrations/' => database_path('/migrations'),
         ], 'migrations');
+
+        $router->bind('video', function ($id) {
+            $video = \Klsandbox\OrientationRoute\Models\Video::find($id);
+            \Klsandbox\SiteModel\Site::protect($video, 'Video');
+
+            return $video;
+        });
     }
 }

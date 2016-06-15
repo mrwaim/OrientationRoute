@@ -22,10 +22,3 @@ Route::group(['prefix' => 'videos'], function () {
         Route::post('update-order', '\Klsandbox\OrientationRoute\Http\Controllers\VideoController@updateOrder');
     });
 });
-
-Route::bind('video', function ($id) {
-    $video = \Klsandbox\OrientationRoute\Models\Video::find($id);
-    \Klsandbox\SiteModel\Site::protect($video, 'Video');
-
-    return $video;
-});
