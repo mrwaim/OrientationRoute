@@ -56,7 +56,7 @@ class VideoController extends Controller
     public function index()
     {
         return view('orientation-route::all')
-            ->withVideos($this->video->forSite()->orderBy('order_number', 'asc')->get());
+            ->withVideos($this->video->orderBy('order_number', 'asc')->get());
     }
 
     /**
@@ -67,20 +67,20 @@ class VideoController extends Controller
     public function allVideos()
     {
         return view('orientation-route::all-videos')
-            ->withVideos($this->video->forSite()->orderBy('order_number', 'asc')->get());
+            ->withVideos($this->video->orderBy('order_number', 'asc')->get());
     }
 
     /**
      * View a video.
      *
-     * @param $slug
-     *
+     * @param Video $video
      * @return mixed
+     *
      */
     public function video(Video $video)
     {
-        $next = $this->video->forSite()->where('order_number', '>', $video->order_number)->orderBy('order_number', 'asc');
-        $previous = $this->video->forSite()->where('order_number', '<', $video->order_number)->orderBy('order_number', 'desc');
+        $next = $this->video->where('order_number', '>', $video->order_number)->orderBy('order_number', 'asc');
+        $previous = $this->video->where('order_number', '<', $video->order_number)->orderBy('order_number', 'desc');
 
         return view('orientation-route::view')
             ->withVideo($video)
@@ -92,9 +92,9 @@ class VideoController extends Controller
     /**
      * Watch a video fully.
      *
-     * @param $slug
-     *
+     * @param Video $video
      * @return mixed
+     *
      */
     public function watchVideo(Video $video)
     {
@@ -114,9 +114,9 @@ class VideoController extends Controller
     /**
      * Unwatch a video.
      *
-     * @param $slug
-     *
+     * @param Video $video
      * @return mixed
+     *
      */
     public function unwatchVideo(Video $video)
     {
@@ -141,15 +141,15 @@ class VideoController extends Controller
     {
         return view('orientation-route::users')
             ->withInfo(['title' => 'Users'])
-            ->withUsers($this->user->forSite()->with('watchedVideo')->get());
+            ->withUsers($this->user->with('watchedVideo')->get());
     }
 
     /**
      * View a user.
      *
-     * @param $username
-     *
+     * @param User $user
      * @return mixed
+     *
      */
     public function viewUser(User $user)
     {
@@ -197,9 +197,9 @@ class VideoController extends Controller
     /**
      * Edit a video.
      *
-     * @param $slug
-     *
+     * @param Video $video
      * @return mixed
+     *
      */
     public function edit(Video $video)
     {
@@ -214,9 +214,9 @@ class VideoController extends Controller
     /**
      * Update a video.
      *
-     * @param $slug
-     *
+     * @param Video $video
      * @return mixed
+     *
      */
     public function update(Video $video)
     {
@@ -292,9 +292,9 @@ class VideoController extends Controller
     /**
      * Delete a video.
      *
-     * @param $slug
-     *
+     * @param Video $video
      * @return mixed
+     *
      */
     public function delete(Video $video)
     {

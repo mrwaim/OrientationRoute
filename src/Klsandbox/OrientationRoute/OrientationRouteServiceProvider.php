@@ -52,7 +52,6 @@ class OrientationRouteServiceProvider extends ServiceProvider
 
         $router->bind('video', function ($id) {
             $video = \Klsandbox\OrientationRoute\Models\Video::find($id);
-            \Klsandbox\SiteModel\Site::protect($video, 'Video');
 
             return $video;
         });

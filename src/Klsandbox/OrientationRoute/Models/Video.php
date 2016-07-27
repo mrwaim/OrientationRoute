@@ -3,7 +3,6 @@
 namespace Klsandbox\OrientationRoute\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Klsandbox\SiteModel\SiteExtensions;
 
 /**
  * Klsandbox\OrientationRoute\Models\Video
@@ -31,8 +30,6 @@ use Klsandbox\SiteModel\SiteExtensions;
  */
 class Video extends Model
 {
-    use SiteExtensions;
-
     /**
      * @var array
      */
