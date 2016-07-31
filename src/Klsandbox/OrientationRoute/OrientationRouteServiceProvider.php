@@ -4,6 +4,8 @@ namespace Klsandbox\OrientationRoute;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Klsandbox\OrientationRoute\Models\Video;
+use Klsandbox\SiteModel\Site;
 
 class OrientationRouteServiceProvider extends ServiceProvider
 {
@@ -51,8 +53,8 @@ class OrientationRouteServiceProvider extends ServiceProvider
         ], 'migrations');
 
         $router->bind('video', function ($id) {
-            $video = \Klsandbox\OrientationRoute\Models\Video::find($id);
-
+            $video = Video::find($id);
+            Site::protect($video, 'Video');
             return $video;
         });
     }
