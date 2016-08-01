@@ -5,7 +5,6 @@ namespace Klsandbox\OrientationRoute;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Klsandbox\OrientationRoute\Models\Video;
-use Klsandbox\SiteModel\Site;
 
 class OrientationRouteServiceProvider extends ServiceProvider
 {
