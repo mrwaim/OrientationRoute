@@ -2,6 +2,7 @@
 
 namespace Klsandbox\OrientationRoute;
 
+use App\Services\Site;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Klsandbox\OrientationRoute\Models\Video;
