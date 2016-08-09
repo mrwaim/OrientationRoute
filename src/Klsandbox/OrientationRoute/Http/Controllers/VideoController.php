@@ -75,7 +75,6 @@ class VideoController extends Controller
      *
      * @param Video $video
      * @return mixed
-     *
      */
     public function video(Video $video)
     {
@@ -94,7 +93,6 @@ class VideoController extends Controller
      *
      * @param Video $video
      * @return mixed
-     *
      */
     public function watchVideo(Video $video)
     {
@@ -116,7 +114,6 @@ class VideoController extends Controller
      *
      * @param Video $video
      * @return mixed
-     *
      */
     public function unwatchVideo(Video $video)
     {
@@ -149,7 +146,6 @@ class VideoController extends Controller
      *
      * @param User $user
      * @return mixed
-     *
      */
     public function viewUser(User $user)
     {
@@ -199,7 +195,6 @@ class VideoController extends Controller
      *
      * @param Video $video
      * @return mixed
-     *
      */
     public function edit(Video $video)
     {
@@ -216,7 +211,6 @@ class VideoController extends Controller
      *
      * @param Video $video
      * @return mixed
-     *
      */
     public function update(Video $video)
     {
@@ -294,7 +288,6 @@ class VideoController extends Controller
      *
      * @param Video $video
      * @return mixed
-     *
      */
     public function delete(Video $video)
     {

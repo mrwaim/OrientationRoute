@@ -55,6 +55,7 @@ class OrientationRouteServiceProvider extends ServiceProvider
         $router->bind('video', function ($id) {
             $video = Video::find($id);
             Site::protect($video, 'Video');
+
             return $video;
         });
     }
