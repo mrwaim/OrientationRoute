@@ -56,8 +56,14 @@ class VideoController extends Controller
      */
     public function index()
     {
+        if(! Auth::user()->access()->admin) {
+            $videos = $this->video->whereIn('access_name', $this->getUserAccessList())
+                ->orderBy('order_number', 'asc')->get();
+        }else {
+            $videos = $this->video->orderBy('order_number', 'asc')->get();
+        }
         return view('orientation-route::all')
-            ->withVideos($this->video->orderBy('order_number', 'asc')->get());
+            ->withVideos($videos);
     }
 
     /**
@@ -309,6 +315,20 @@ class VideoController extends Controller
 
     private function getAccessList()
     {
-        return ['admin', 'staff', 'sales', 'hq', 'dropship', 'premium', 'manager'];
+        return ['staff', 'sales', 'is_hq', 'dropship', 'premium', 'manager', 'stockist'];
+    }
+    
+    private function getUserAccessList()
+    {
+        $access = Auth::user()->access();
+        $accessList = [];
+
+        foreach ($this->getAccessList() as $item) {
+            if ($access->{$item}) {
+               $accessList[] = $item;
+            }
+        }
+
+        return $accessList;
     }
 }
