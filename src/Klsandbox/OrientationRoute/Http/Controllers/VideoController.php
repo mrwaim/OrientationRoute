@@ -163,7 +163,7 @@ class VideoController extends Controller
     public function create()
     {
         $data = [
-            'roles' => Role::all(),
+            'roles' => $this->getAccessList(),
         ];
         return view('orientation-route::create', $data)->withInfo(['title' => 'Add a video | Dashboard']);
     }
@@ -181,7 +181,7 @@ class VideoController extends Controller
             'description' => 'required',
             'order_number' => 'required|integer|unique:videos',
             'embed_code' => 'required',
-            'role_id'   => 'required',
+            'access_name'   => 'required',
         ]);
 
         $this->video->create([
@@ -190,7 +190,7 @@ class VideoController extends Controller
             'order_number' => $this->request->input('order_number'),
             'embed_code' => $this->request->input('embed_code'),
             'slug' => str_slug($this->request->input('title'), '-'),
-            'role_id' => $this->request->input('role_id')
+            'access_name' => $this->request->input('access_name')
         ]);
 
         return redirect('videos/all')->withSuccess('Video added');
@@ -206,7 +206,7 @@ class VideoController extends Controller
     {
         if ($video->count() > 0) {
             $data = [
-                'roles' => Role::all(),
+                'roles' => $this->getAccessList(),
             ];
             return view('orientation-route::edit', $data)
                 ->withVideo($video);
@@ -229,7 +229,7 @@ class VideoController extends Controller
             'description' => 'required',
             'order_number' => 'required|integer|unique:videos,order_number,' . $video->id . ',id',
             'embed_code' => 'required',
-            'role_id' => 'required',
+            'access_name' => 'required',
         ]);
 
         $video->title = $this->request->input('title');
@@ -237,7 +237,7 @@ class VideoController extends Controller
         $video->order_number = $this->request->input('order_number');
         $video->embed_code = $this->request->input('embed_code');
         $video->slug = str_slug($this->request->input('title'), '-');
-        $video->role_id = $this->request->input('role_id');
+        $video->access_name = $this->request->input('access_name');
         $video->save();
 
         return redirect('videos/all')->withSuccess('Video updated');
@@ -305,5 +305,10 @@ class VideoController extends Controller
         $video->delete();
 
         return redirect('videos/all')->withSuccess('Video removed');
+    }
+
+    private function getAccessList()
+    {
+        return ['admin', 'staff', 'sales', 'hq', 'dropship', 'premium', 'manager'];
     }
 }

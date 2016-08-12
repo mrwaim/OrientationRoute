@@ -72,10 +72,10 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Role</label>
                             <div class="col-md-5">
-                                <select class="form-control" name="role_id">
+                                <select class="form-control" name="access_name">
                                     <option value="">Choose role</option>
                                     @foreach($roles as $role)
-                                        <option value="{{ $role->id }}" {{ old('role_id', $video->role_id) == $role->id ? 'selected' : null }}>{{ ucfirst($role->name) }}</option>
+                                        <option value="{{ $role }}" {{ old('access_name', $video->access_name) == $role ? 'selected' : null }}>{{ ucfirst($role) }}</option>
                                     @endforeach
                                 </select>
                             </div>
