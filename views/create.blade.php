@@ -38,7 +38,7 @@
 
                     <div class="col-md-5">
                         <textarea name="description" id="description" class="form-control"
-                                  placeholder="Description"></textarea>
+                                  placeholder="Description">{{ old('description') }}</textarea>
                     </div>
                     <!-- div.col-md-5 -->
                 </div>
@@ -65,6 +65,18 @@
                     <!-- div.col-md-5 -->
                 </div>
                 <!-- div.form-group -->
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Role</label>
+                    <div class="col-md-5">
+                        <select class="form-control" name="role_id">
+                            <option value="">Choose role</option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : null }}>{{ ucfirst($role->name) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <div class="col-md-offset-3 col-md-2">

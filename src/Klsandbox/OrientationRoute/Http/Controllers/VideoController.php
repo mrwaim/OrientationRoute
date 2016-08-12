@@ -9,6 +9,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use App\Http\Controllers\Controller;
+use Klsandbox\RoleModel\Role;
 
 class VideoController extends Controller
 {
@@ -161,7 +162,10 @@ class VideoController extends Controller
      */
     public function create()
     {
-        return view('orientation-route::create')->withInfo(['title' => 'Add a video | Dashboard']);
+        $data = [
+            'roles' => Role::all(),
+        ];
+        return view('orientation-route::create', $data)->withInfo(['title' => 'Add a video | Dashboard']);
     }
 
     /**
@@ -177,6 +181,7 @@ class VideoController extends Controller
             'description' => 'required',
             'order_number' => 'required|integer|unique:videos',
             'embed_code' => 'required',
+            'role_id'   => 'required',
         ]);
 
         $this->video->create([
@@ -185,6 +190,7 @@ class VideoController extends Controller
             'order_number' => $this->request->input('order_number'),
             'embed_code' => $this->request->input('embed_code'),
             'slug' => str_slug($this->request->input('title'), '-'),
+            'role_id' => $this->request->input('role_id')
         ]);
 
         return redirect('videos/all')->withSuccess('Video added');
@@ -199,7 +205,10 @@ class VideoController extends Controller
     public function edit(Video $video)
     {
         if ($video->count() > 0) {
-            return view('orientation-route::edit')
+            $data = [
+                'roles' => Role::all(),
+            ];
+            return view('orientation-route::edit', $data)
                 ->withVideo($video);
         }
 
@@ -220,6 +229,7 @@ class VideoController extends Controller
             'description' => 'required',
             'order_number' => 'required|integer|unique:videos,order_number,' . $video->id . ',id',
             'embed_code' => 'required',
+            'role_id' => 'required',
         ]);
 
         $video->title = $this->request->input('title');
@@ -227,6 +237,7 @@ class VideoController extends Controller
         $video->order_number = $this->request->input('order_number');
         $video->embed_code = $this->request->input('embed_code');
         $video->slug = str_slug($this->request->input('title'), '-');
+        $video->role_id = $this->request->input('role_id');
         $video->save();
 
         return redirect('videos/all')->withSuccess('Video updated');

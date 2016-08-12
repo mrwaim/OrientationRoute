@@ -32,6 +32,7 @@
                                 <th>#</th>
                                 <th>Title</th>
                                 <th>Description</th>
+                                <th>Role</th>
                                 <th>Order</th>
                                 <th></th>
                             </tr>
@@ -46,6 +47,7 @@
                                         <a href="{{ url('videos/' . $video->id . '/view') }}">{{ $video->title }}</a>
                                     </td>
                                     <td>{{ $video->description }}</td>
+                                    <td>{{ $video->role ? ucfirst($video->role->name) : '-' }}</td>
                                     <td width="10%">
                                         <input type="number" name="order_number[]" class="form-control"
                                                value="{{ $video->order_number }}">

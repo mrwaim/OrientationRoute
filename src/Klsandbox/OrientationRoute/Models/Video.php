@@ -3,6 +3,7 @@
 namespace Klsandbox\OrientationRoute\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Klsandbox\RoleModel\Role;
 
 /**
  * Klsandbox\OrientationRoute\Models\Video
@@ -33,7 +34,7 @@ class Video extends Model
     /**
      * @var array
      */
-    protected $fillable = ['title', 'description', 'order_number', 'slug', 'embed_code'];
+    protected $fillable = ['title', 'description', 'order_number', 'slug', 'embed_code', 'role_id'];
 
     /**
      * Relationship with `user_video` table.
@@ -48,5 +49,10 @@ class Video extends Model
     public function watchedByUser($user)
     {
         return $this->watchedVideo()->where('user_id', '=', $user->id)->count() > 0;
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }
