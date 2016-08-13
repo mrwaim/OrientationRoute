@@ -2,6 +2,7 @@
 
 namespace Klsandbox\OrientationRoute\Http\Controllers;
 
+use App\Models\Access;
 use App\Models\User;
 use Klsandbox\OrientationRoute\Models\UserVideo;
 use Klsandbox\OrientationRoute\Models\Video;
@@ -32,6 +33,10 @@ class VideoController extends Controller
      * @var UserVideo
      */
     protected $userVideo;
+    /**
+     * @var Access
+     */
+    private $access;
 
     /**
      * HomeController constructor.
@@ -39,14 +44,16 @@ class VideoController extends Controller
      * @param User $user
      * @param Video $video
      * @param UserVideo $userVideo
+     * @param Access $access
      * @param Request $request
      */
-    public function __construct(User $user, Video $video, UserVideo $userVideo, Request $request)
+    public function __construct(User $user, Video $video, UserVideo $userVideo, Access $access, Request $request)
     {
         $this->user = $user;
         $this->video = $video;
         $this->userVideo = $userVideo;
         $this->request = $request;
+        $this->access = $access;
     }
 
     /**
@@ -56,8 +63,9 @@ class VideoController extends Controller
      */
     public function index()
     {
-        if(! Auth::user()->access()->admin) {
-            $videos = $this->video->whereIn('access_name', $this->getUserAccessList())
+        $auth = Auth::user();
+        if(! $auth->access()->admin) {
+            $videos = $this->video->whereIn('access_name', $auth->accessList())
                 ->orderBy('order_number', 'asc')->get();
         }else {
             $videos = $this->video->orderBy('order_number', 'asc')->get();
@@ -169,7 +177,7 @@ class VideoController extends Controller
     public function create()
     {
         $data = [
-            'roles' => $this->getAccessList(),
+            'roles' => $this->access->list(),
         ];
         return view('orientation-route::create', $data)->withInfo(['title' => 'Add a video | Dashboard']);
     }
@@ -212,7 +220,7 @@ class VideoController extends Controller
     {
         if ($video->count() > 0) {
             $data = [
-                'roles' => $this->getAccessList(),
+                'roles' => $this->access->list(),
             ];
             return view('orientation-route::edit', $data)
                 ->withVideo($video);
@@ -311,24 +319,5 @@ class VideoController extends Controller
         $video->delete();
 
         return redirect('videos/all')->withSuccess('Video removed');
-    }
-
-    private function getAccessList()
-    {
-        return ['staff', 'sales', 'is_hq', 'dropship', 'premium', 'manager', 'stockist'];
-    }
-    
-    private function getUserAccessList()
-    {
-        $access = Auth::user()->access();
-        $accessList = [];
-
-        foreach ($this->getAccessList() as $item) {
-            if ($access->{$item}) {
-               $accessList[] = $item;
-            }
-        }
-
-        return $accessList;
     }
 }
