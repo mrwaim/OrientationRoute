@@ -93,8 +93,19 @@ class VideoController extends Controller
      */
     public function video(Video $video)
     {
+        $auth = Auth::user();
+
+        if(! $auth->access()->admin && ! $auth->hasAccessToVideo($video)) {
+            \App::abort('500', 'You do not have access to this video' );
+        }
+
         $next = $this->video->where('order_number', '>', $video->order_number)->orderBy('order_number', 'asc');
         $previous = $this->video->where('order_number', '<', $video->order_number)->orderBy('order_number', 'desc');
+
+        if (! $auth->access()->admin) {
+            $next = $next->whereIn('access_name', $auth->accessList());
+            $previous = $previous->whereIn('access_name', $auth->accessList());
+        }
 
         return view('orientation-route::view')
             ->withVideo($video)
