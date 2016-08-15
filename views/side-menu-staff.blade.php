@@ -1,10 +1,10 @@
 <?php
 $videoSubmenu = [];
 foreach ($videos as $video) {
-   $videoSubmenu[] = [
-        'videoFilter' => $video->id,
-        'url' => $video->id . '/view',
-        'menu' => ($video->watchedByUser($auth->user) ? '✔' : '') . ' ' . $video->title,
+    $videoSubmenu[] = [
+            'videoFilter' => $video->id,
+            'url' => $video->id . '/view',
+            'menu' => ($video->watchedByUser($auth->user) ? '✔' : '') . ' ' . $video->title,
     ];
 }
 ?>

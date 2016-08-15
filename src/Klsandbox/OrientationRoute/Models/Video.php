@@ -3,6 +3,7 @@
 namespace Klsandbox\OrientationRoute\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Klsandbox\RoleModel\Role;
 
 /**
  * Klsandbox\OrientationRoute\Models\Video
@@ -33,7 +34,7 @@ class Video extends Model
     /**
      * @var array
      */
-    protected $fillable = ['title', 'description', 'order_number', 'slug', 'embed_code'];
+    protected $fillable = ['title', 'description', 'order_number', 'slug', 'embed_code', 'access_name'];
 
     /**
      * Relationship with `user_video` table.

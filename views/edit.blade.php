@@ -70,6 +70,18 @@
                         <!-- div.form-group -->
 
                         <div class="form-group">
+                            <label class="col-md-3 control-label">Role</label>
+                            <div class="col-md-5">
+                                <select class="form-control" name="access_name">
+                                    <option value="">Choose role</option>
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role }}" {{ old('access_name', $video->access_name) == $role ? 'selected' : null }}>{{ ucfirst($role) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <div class="col-md-offset-10 col-md-2">
                                 <input type="submit" value="Save" class="btn btn-primary">
                             </div>

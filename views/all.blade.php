@@ -19,6 +19,11 @@
             @include('elements.event')
 
             <div class="row">
+                @if( ! count($videos))
+                    <div class="col-md-12">
+                        <h5>No videos</h5>
+                    </div>
+                @endif
                 @foreach($videos as $video)
                     <div class="col-md-3">
                         <!-- 4:3 aspect ratio -->

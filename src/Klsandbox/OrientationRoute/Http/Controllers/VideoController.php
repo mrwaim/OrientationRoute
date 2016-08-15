@@ -2,6 +2,7 @@
 
 namespace Klsandbox\OrientationRoute\Http\Controllers;
 
+use App\Models\Access;
 use App\Models\User;
 use Klsandbox\OrientationRoute\Models\UserVideo;
 use Klsandbox\OrientationRoute\Models\Video;
@@ -9,6 +10,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use App\Http\Controllers\Controller;
+use Klsandbox\RoleModel\Role;
 
 class VideoController extends Controller
 {
@@ -31,6 +33,10 @@ class VideoController extends Controller
      * @var UserVideo
      */
     protected $userVideo;
+    /**
+     * @var Access
+     */
+    private $access;
 
     /**
      * HomeController constructor.
@@ -38,14 +44,16 @@ class VideoController extends Controller
      * @param User $user
      * @param Video $video
      * @param UserVideo $userVideo
+     * @param Access $access
      * @param Request $request
      */
-    public function __construct(User $user, Video $video, UserVideo $userVideo, Request $request)
+    public function __construct(User $user, Video $video, UserVideo $userVideo, Access $access, Request $request)
     {
         $this->user = $user;
         $this->video = $video;
         $this->userVideo = $userVideo;
         $this->request = $request;
+        $this->access = $access;
     }
 
     /**
@@ -55,8 +63,15 @@ class VideoController extends Controller
      */
     public function index()
     {
+        $auth = Auth::user();
+        if(! $auth->access()->admin) {
+            $videos = $this->video->whereIn('access_name', $auth->accessList())
+                ->orderBy('order_number', 'asc')->get();
+        }else {
+            $videos = $this->video->orderBy('order_number', 'asc')->get();
+        }
         return view('orientation-route::all')
-            ->withVideos($this->video->orderBy('order_number', 'asc')->get());
+            ->withVideos($videos);
     }
 
     /**
@@ -78,8 +93,19 @@ class VideoController extends Controller
      */
     public function video(Video $video)
     {
+        $auth = Auth::user();
+
+        if(! $auth->access()->admin && ! $auth->hasAccessToVideo($video)) {
+            \App::abort('500', 'You do not have access to this video' );
+        }
+
         $next = $this->video->where('order_number', '>', $video->order_number)->orderBy('order_number', 'asc');
         $previous = $this->video->where('order_number', '<', $video->order_number)->orderBy('order_number', 'desc');
+
+        if (! $auth->access()->admin) {
+            $next = $next->whereIn('access_name', $auth->accessList());
+            $previous = $previous->whereIn('access_name', $auth->accessList());
+        }
 
         return view('orientation-route::view')
             ->withVideo($video)
@@ -161,7 +187,10 @@ class VideoController extends Controller
      */
     public function create()
     {
-        return view('orientation-route::create')->withInfo(['title' => 'Add a video | Dashboard']);
+        $data = [
+            'roles' => $this->access->list(),
+        ];
+        return view('orientation-route::create', $data)->withInfo(['title' => 'Add a video | Dashboard']);
     }
 
     /**
@@ -177,6 +206,7 @@ class VideoController extends Controller
             'description' => 'required',
             'order_number' => 'required|integer|unique:videos',
             'embed_code' => 'required',
+            'access_name'   => 'required',
         ]);
 
         $this->video->create([
@@ -185,6 +215,7 @@ class VideoController extends Controller
             'order_number' => $this->request->input('order_number'),
             'embed_code' => $this->request->input('embed_code'),
             'slug' => str_slug($this->request->input('title'), '-'),
+            'access_name' => $this->request->input('access_name')
         ]);
 
         return redirect('videos/all')->withSuccess('Video added');
@@ -199,7 +230,10 @@ class VideoController extends Controller
     public function edit(Video $video)
     {
         if ($video->count() > 0) {
-            return view('orientation-route::edit')
+            $data = [
+                'roles' => $this->access->list(),
+            ];
+            return view('orientation-route::edit', $data)
                 ->withVideo($video);
         }
 
@@ -220,6 +254,7 @@ class VideoController extends Controller
             'description' => 'required',
             'order_number' => 'required|integer|unique:videos,order_number,' . $video->id . ',id',
             'embed_code' => 'required',
+            'access_name' => 'required',
         ]);
 
         $video->title = $this->request->input('title');
@@ -227,6 +262,7 @@ class VideoController extends Controller
         $video->order_number = $this->request->input('order_number');
         $video->embed_code = $this->request->input('embed_code');
         $video->slug = str_slug($this->request->input('title'), '-');
+        $video->access_name = $this->request->input('access_name');
         $video->save();
 
         return redirect('videos/all')->withSuccess('Video updated');
