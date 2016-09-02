@@ -218,7 +218,7 @@ class VideoController extends Controller
             'access_name' => $this->request->input('access_name')
         ]);
 
-        return redirect('videos/all')->withSuccess('Video added');
+        return redirect('videos/all')->withSuccessMessage('Video added');
     }
 
     /**
@@ -265,7 +265,7 @@ class VideoController extends Controller
         $video->access_name = $this->request->input('access_name');
         $video->save();
 
-        return redirect('videos/all')->withSuccess('Video updated');
+        return redirect('videos/all')->withSuccessMessage('Video updated');
     }
 
     /**
@@ -316,7 +316,7 @@ class VideoController extends Controller
             }
         }
 
-        return redirect('videos/all-videos')->withSuccess('Video updated');
+        return redirect('videos/all-videos')->withSuccessMessage('Video updated');
     }
 
     /**
@@ -329,6 +329,6 @@ class VideoController extends Controller
     {
         $video->delete();
 
-        return redirect('videos/all')->withSuccess('Video removed');
+        return redirect('videos/all')->withSuccessMessage('Video removed');
     }
 }

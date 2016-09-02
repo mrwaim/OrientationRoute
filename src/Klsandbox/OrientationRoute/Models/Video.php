@@ -28,6 +28,8 @@ use Klsandbox\RoleModel\Role;
  * @mixin \Eloquent
  * @property integer $site_id
  * @method static \Illuminate\Database\Query\Builder|\Klsandbox\OrientationRoute\Models\Video whereSiteId($value)
+ * @property string $access_name
+ * @method static \Illuminate\Database\Query\Builder|\Klsandbox\OrientationRoute\Models\Video whereAccessName($value)
  */
 class Video extends Model
 {
