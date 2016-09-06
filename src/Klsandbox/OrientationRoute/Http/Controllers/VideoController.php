@@ -188,7 +188,7 @@ class VideoController extends Controller
     public function create()
     {
         $data = [
-            'roles' => $this->access->list(),
+            'roles' => $this->access->values(),
         ];
         return view('orientation-route::create', $data)->withInfo(['title' => 'Add a video | Dashboard']);
     }
@@ -231,7 +231,7 @@ class VideoController extends Controller
     {
         if ($video->count() > 0) {
             $data = [
-                'roles' => $this->access->list(),
+                'roles' => $this->access->values(),
             ];
             return view('orientation-route::edit', $data)
                 ->withVideo($video);
